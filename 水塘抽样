@@ -7,7 +7,7 @@ int pick(int target, int[] v)
       continue;
      cnt++;
      if(rand() % cnt == 0)
-      res = i
+      res = i;
   }
-  return res
+  return res;
 }
