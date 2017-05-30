@@ -1,0 +1,13 @@
+int pick(int target, int[] v)
+{
+  int cnt =0, res =-1;
+  for(int i = 0; i < v.Length; i++)
+  {
+    if(v[i] != target)
+      continue;
+     cnt++;
+     if(rand() % cnt == 0)
+      res = i
+  }
+  return res
+}
