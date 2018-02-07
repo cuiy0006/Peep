@@ -1,0 +1,35 @@
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+head = ListNode(0)
+ln1 = ListNode(1)
+ln2 = ListNode(2)
+ln3 = ListNode(3)
+ln4 = ListNode(4)
+ln5 = ListNode(5)
+
+head.next = ln1
+ln1.next = ln2
+
+
+#ln1.next, ln1 = None, ln1.next
+#this is correct
+#right hand side: None, ln2
+#left hand side: ln1.next, ln1
+#first set None to ln1.next
+#second set ln2 to ln1
+
+ln1, ln1.next = ln1.next, None
+#right hand side: ln2, None
+#left hand side: ln1, ln1.next
+#first set ln2 to ln1, now, ln1 point to ln2
+#second set None to ln2, because ln1 point to ln2
+
+node = head
+while node != None:
+    print(node.val)
+    node = node.next
+print('----')
+print(ln1.val)
