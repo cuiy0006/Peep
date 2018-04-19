@@ -197,11 +197,11 @@ $ git status
 no changes added to commit (use "git add" and/or "git commit -a")  
     
 // **Then resolve conflicts manually**  
-<<<<<<< HEAD  
-Creating a new branch is quick & simple.  
-=======  
-Creating a new branch is quick AND simple.  
->>>>>>> feature1  
+// <<<<<<< HEAD  
+// Creating a new branch is quick & simple.  
+// =======  
+// Creating a new branch is quick AND simple.  
+// >>>>>>> feature1  
 
 // **after resolving conflicts**, add and commit
 $ git add readme.txt  
@@ -210,12 +210,12 @@ $ git commit -m "conflict fixed"
 
 // **graphical**  
 $ git log --graph --pretty=oneline --abbrev-commit  
-*   59bc1cb conflict fixed  
-|\  
-| * 75a857c AND simple  
-* | 400b400 & simple  
-|/  
-* fec145a branch test  
+// *   59bc1cb conflict fixed  
+// |\  
+// | * 75a857c AND simple  
+// * | 400b400 & simple  
+// |/  
+// * fec145a branch test  
 ...  
 // altnatively,  
 $ git config alias.graph 'log --decorate --oneline --branches --graph'  
@@ -226,7 +226,179 @@ $ git graph
 $ git branch -d feature1  
 Deleted branch feature1 (was 75a857c).  
 
-## branch management strategy
+## branch management strategy  
+// **Fast-forward** is a mode that let HEAD point at dev's current commit and then merge  
+// **resolve conflict** is to create new commit, not let HEAD point to branch latest commit  
+// **Forbid Fast-forward** --no-ff is to create new commit, even if there is no conflicts  
+
+$ git merge --no-ff -m "merge with no-ff" dev  
+Merge made by the 'recursive' strategy.  
+ readme.txt |    1 +  
+ 1 file changed, 1 insertion(+)  
+ 
+$ git log --graph --pretty=oneline --abbrev-commit  
+// *   7825a50 merge with no-ff  
+// |\  
+// | * 6224937 add merge  
+// |/  
+// *   59bc1cb conflict fixed  
+// ...  
+
+**strategy**
+----------------------------------master(stable)  
+----------------------------------dev(unstable)  
+----------------------------------Tom  
+----------------------------------John  
+
+Tom and John branches merge to dev.  
+When new version it to be released, dev merge to master.  
+
+## stash current uncompleted content, for example issue 101 to be fixed
+
+// **working on branch dev, but cannot commit yet**
+$ git status  
+// On branch dev  
+// Changes to be committed:  
+//   (use "git reset HEAD <file>..." to unstage)  
+//  
+//       new file:   hello.py  
+//  
+// Changes not staged for commit:  
+//   (use "git add <file>..." to update what will be committed)  
+//   (use "git checkout -- <file>..." to discard changes in working directory)  
+//  
+//       modified:   readme.txt  
+//  
+
+// **files modified and added to stage** -> can be stashed (hello.py)  
+// **files modified but not added to stage yet** -> can be stashed (readme.txt)  
+// **new created files that not ever be added** -> not managed by git -> cannot be stashed  
+
+// **if switch to master now, hello.py and readme.text will influence master branch**  
+// So, do  
+$ git stash  
+Saved working directory and index state WIP on dev: 6224937 add merge  
+HEAD is now at 6224937 add merge  
+
+// Then,  
+$ git checkout master  
+Switched to branch 'master'  
+Your branch is ahead of 'origin/master' by 6 commits.  
+$ git checkout -b issue-101  
+Switched to a new branch 'issue-101'  
+
+// Then fix issues and commit on issue-101.  
+// Then switch to master, and merge issue-101  
+
+// Then switch back to dev  
+$ git checkout dev  
+Switched to branch 'dev'  
+$ git status  
+// On branch dev  
+nothing to commit (working directory clean)  
+
+$ git stash list  
+stash@{0}: WIP on dev: 6224937 add merge  
+
+// Then pop the stash or apply+drop  
+$ git stash pop  
+
+$ git stash apply stash@{0}  
+$ git stash drop stash@{0}  
+
+// remove a branch that is not merged before  
+$ git branch -D branchname  
+
+## multiplayer coop
+
+// origin is the remote source  
+$ git remote  
+origin  
+
+$ git remote -v  
+origin  git@github.com:michaelliao/learngit.git (fetch)  
+origin  git@github.com:michaelliao/learngit.git (push)  
+
+// **push to certain branch**  
+// push to master  
+$ git push origin master  
+// push to dev  
+$ git push origin dev  
+
+// master分支是主分支，因此要时刻与远程同步；  
+
+// dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；  
+
+// bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；  
+
+// feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。  
+
+// **fetch branch**
+// **A do**
+> $ git clone git@github.com:michaelliao/learngit.git
+> Cloning into 'learngit'...
+> remote: Counting objects: 46, done.
+> remote: Compressing objects: 100% (26/26), done.
+> remote: Total 46 (delta 16), reused 45 (delta 15)
+> Receiving objects: 100% (46/46), 15.69 KiB | 6 KiB/s, done.
+> Resolving deltas: 100% (16/16), done.
+
+// by default, only master branch is clone to local, So  
+
+> $ git branch  
+> * master
+
+// create remote dev to local dev  
+> $ git checkout -b dev origin/dev
+
+// do some add and commit  
+> $ git push origin dev
+
+// **B do**  
+// do some add and commit  
+> $ git push origin dev
+> To git@github.com:michaelliao/learngit.git
+>  ! [rejected]        dev -> dev (non-fast-forward)
+> error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'
+> hint: Updates were rejected because the tip of your current branch is behind
+> hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+> hint: before pushing again.
+> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+// Push failed, because there is some conflicts  
+// So, pull(fetch + merge) is needed  
+> $ git pull
+> remote: Counting objects: 5, done.
+> remote: Compressing objects: 100% (2/2), done.
+> remote: Total 3 (delta 0), reused 3 (delta 0)
+> Unpacking objects: 100% (3/3), done.
+> From github.com:michaelliao/learngit
+>    fc38031..291bea8  dev        -> origin/dev
+> There is no tracking information for the current branch.
+> Please specify which branch you want to merge with.
+> See git-pull(1) for details
+
+>    git pull <remote> <branch>
+
+> If you wish to set tracking information for this branch you can do so with:
+
+>    git branch --set-upstream dev origin/<branch>
+
+// Pull failed, becuase local dev is not linked with remote dev  
+// So, as hinted, link is needed  
+> $ git branch --set-upstream dev origin/dev
+> Branch dev set up to track remote branch dev from origin.
+
+// Then try pull again  
+> $ git pull
+> Auto-merging hello.py
+> CONFLICT (content): Merge conflict in hello.py
+> Automatic merge failed; fix conflicts and then commit the result.
+
+// Then resolve conflicts manually  
+// Then commit and push  
+> $ git commit -m "merge & fix hello.py"
+> $ git push origin dev
 
 
 
