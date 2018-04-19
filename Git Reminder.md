@@ -1,10 +1,10 @@
 # 1. create repository
-$git init  
+$ git init  
 
-$git add readme.txt  
-$git commit -m "message"  
+$ git add readme.txt  
+$ git commit -m "message"  
 
-$git commit -a -m "message"  
+$ git commit -a -m "message"  
 
 
 
@@ -104,7 +104,137 @@ $ git commit -m "remove test.txt"
 $ git checkout -- test.txt  
 
 
+# 6. Remove Repository
 
+$ git remote add origin https://github.com/cuiy0006/scrawler-grab-all.git  
+// $git remote add origin git@github.com/cuiy0006/scrawler-grab-all.git  
+$ git push -u origin master  
+//origin is the alias name of remote repository  
+// -u is for first push  
+
+// Or  
+$ git clone https://github.com/cuiy0006/scrawler-grab-all.git  
+// $ git clone git@github.com/cuiy0006/scrawler-grab-all.git  
+// git@ is ssh protocol, https is https protocol  
+// ssh protocol does not need password everytime, https protocol is slow and widely supported
+
+# 7. Branches
+## create and merge branches
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000  
+
+// on master branch  
+$ git checkout -b dev  
+Switched to a new branch 'dev'  
+
+// checkout -b equals to  
+$ git branch dev  
+$ git checkout dev  
+Switched to branch 'dev'  
+
+$ git branch  
+* dev  
+  master  
+
+//here nano readme.txt, add something
+$ git add readme.txt  
+$ git commit -m "branch test"  
+[dev fec145a] branch test  
+ 1 file changed, 1 insertion(+)  
+ 
+$ git checkout master  
+Switched to branch 'master'  
+
+$ git merge dev  
+Updating d17efd8..fec145a  
+Fast-forward  
+ readme.txt |    1 +  
+ 1 file changed, 1 insertion(+)  
+ 
+// **Fast-forward** is a mode that let HEAD point at dev's current commit and then merge  
+
+// remove dev branch after merge  
+$ git branch -d dev  
+Deleted branch dev (was fec145a).  
+
+## conflits
+
+//**switch to feature1**
+$ git checkout -b feature1  
+Switched to a new branch 'feature1'  
+// Then changes sth in readme.txt  
+
+$ git add readme.txt  
+$ git commit -m "AND simple"  
+[feature1 75a857c] AND simple  
+ 1 file changed, 1 insertion(+), 1 deletion(-)  
+ 
+//**switch back to master**
+$ git checkout master  
+Switched to branch 'master'  
+Your branch is ahead of 'origin/master' by 1 commit.  
+// Then changes sth in readme.txt  
+
+$ git add readme.txt  
+$ git commit -m "& simple"  
+[master 400b400] & simple  
+ 1 file changed, 1 insertion(+), 1 deletion(-)  
+ 
+ // **now merge**  
+ $ git merge feature1  
+Auto-merging readme.txt  
+**CONFLICT (content): Merge conflict in readme.txt**  
+Automatic merge failed; fix conflicts and then commit the result.  
+
+$ git status  
+// On branch master  
+// Your branch is ahead of 'origin/master' by 2 commits.  
+//  
+// Unmerged paths:  
+//   (use "git add/rm <file>..." as appropriate to mark resolution)  
+//  
+//       both modified:      readme.txt  
+//  
+no changes added to commit (use "git add" and/or "git commit -a")  
+    
+// **Then resolve conflicts manually**  
+<<<<<<< HEAD  
+Creating a new branch is quick & simple.  
+=======  
+Creating a new branch is quick AND simple.  
+>>>>>>> feature1  
+
+// **after resolving conflicts**, add and commit
+$ git add readme.txt  
+$ git commit -m "conflict fixed"  
+[master 59bc1cb] conflict fixed  
+
+// **graphical**  
+$ git log --graph --pretty=oneline --abbrev-commit  
+*   59bc1cb conflict fixed  
+|\  
+| * 75a857c AND simple  
+* | 400b400 & simple  
+|/  
+* fec145a branch test  
+...  
+// altnatively,  
+$ git config alias.graph 'log --decorate --oneline --branches --graph'  
+$ git graph  
+
+
+// remove feature1 branch  
+$ git branch -d feature1  
+Deleted branch feature1 (was 75a857c).  
+
+## branch management strategy
+
+
+
+
+
+
+  
+  
 
 
 
