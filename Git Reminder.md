@@ -200,11 +200,11 @@ https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b
 > no changes added to commit (use "git add" and/or "git commit -a")  
     
 // **Then resolve conflicts manually**  
-> <<<<<<< HEAD  
-> Creating a new branch is quick & simple.  
-> =======  
-> Creating a new branch is quick AND simple.  
-> >>>>>>> feature1  
+// <<<<<<< HEAD  
+// Creating a new branch is quick & simple.  
+// =======  
+// Creating a new branch is quick AND simple.  
+// >>>>>>> feature1  
 
 // **after resolving conflicts**, add and commit  
 > $ git add readme.txt  
