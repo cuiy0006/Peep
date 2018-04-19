@@ -312,18 +312,18 @@ $ git branch -D branchname
 ## multiplayer coop
 
 // origin is the remote source  
-$ git remote  
-origin  
+> $ git remote  
+> origin  
 
-$ git remote -v  
-origin  git@github.com:michaelliao/learngit.git (fetch)  
-origin  git@github.com:michaelliao/learngit.git (push)  
+> $ git remote -v  
+> origin  git@github.com:michaelliao/learngit.git (fetch)  
+> origin  git@github.com:michaelliao/learngit.git (push)  
 
 // **push to certain branch**  
 // push to master  
-$ git push origin master  
+> $ git push origin master  
 // push to dev  
-$ git push origin dev  
+> $ git push origin dev  
 
 // master分支是主分支，因此要时刻与远程同步；  
 
@@ -333,72 +333,72 @@ $ git push origin dev
 
 // feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。  
 
-// **fetch branch**
+// **fetch branch**  
 // **A do**
-> $ git clone git@github.com:michaelliao/learngit.git
-> Cloning into 'learngit'...
-> remote: Counting objects: 46, done.
-> remote: Compressing objects: 100% (26/26), done.
-> remote: Total 46 (delta 16), reused 45 (delta 15)
-> Receiving objects: 100% (46/46), 15.69 KiB | 6 KiB/s, done.
-> Resolving deltas: 100% (16/16), done.
+> $ git clone git@github.com:michaelliao/learngit.git  
+> Cloning into 'learngit'...  
+> remote: Counting objects: 46, done.  
+> remote: Compressing objects: 100% (26/26), done.  
+> remote: Total 46 (delta 16), reused 45 (delta 15)  
+> Receiving objects: 100% (46/46), 15.69 KiB | 6 KiB/s, done.  
+> Resolving deltas: 100% (16/16), done.  
 
 // by default, only master branch is clone to local, So  
 
 > $ git branch  
-> * master
+> * master  
 
 // create remote dev to local dev  
-> $ git checkout -b dev origin/dev
+> $ git checkout -b dev origin/dev  
 
 // do some add and commit  
-> $ git push origin dev
+> $ git push origin dev  
 
 // **B do**  
 // do some add and commit  
-> $ git push origin dev
-> To git@github.com:michaelliao/learngit.git
->  ! [rejected]        dev -> dev (non-fast-forward)
-> error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'
-> hint: Updates were rejected because the tip of your current branch is behind
-> hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
-> hint: before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+> $ git push origin dev  
+> To git@github.com:michaelliao/learngit.git  
+>  ! [rejected]        dev -> dev (non-fast-forward)  
+> error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'  
+> hint: Updates were rejected because the tip of your current branch is behind  
+> hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')  
+> hint: before pushing again.  
+> hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
 
-// Push failed, because there is some conflicts  
-// So, pull(fetch + merge) is needed  
-> $ git pull
-> remote: Counting objects: 5, done.
-> remote: Compressing objects: 100% (2/2), done.
-> remote: Total 3 (delta 0), reused 3 (delta 0)
-> Unpacking objects: 100% (3/3), done.
-> From github.com:michaelliao/learngit
->    fc38031..291bea8  dev        -> origin/dev
-> There is no tracking information for the current branch.
-> Please specify which branch you want to merge with.
-> See git-pull(1) for details
+// Push failed, because there is some conflicts    
+// So, pull(fetch + merge) is needed    
+> $ git pull  
+> remote: Counting objects: 5, done.  
+> remote: Compressing objects: 100% (2/2), done.  
+> remote: Total 3 (delta 0), reused 3 (delta 0)  
+> Unpacking objects: 100% (3/3), done.  
+> From github.com:michaelliao/learngit  
+>    fc38031..291bea8  dev        -> origin/dev  
+> There is no tracking information for the current branch.  
+> Please specify which branch you want to merge with.  
+> See git-pull(1) for details  
 
->    git pull <remote> <branch>
+>    git pull <remote> <branch>  
 
-> If you wish to set tracking information for this branch you can do so with:
+> If you wish to set tracking information for this branch you can do so with:  
 
->    git branch --set-upstream dev origin/<branch>
+>    git branch --set-upstream dev origin/<branch>  
 
-// Pull failed, becuase local dev is not linked with remote dev  
-// So, as hinted, link is needed  
-> $ git branch --set-upstream dev origin/dev
-> Branch dev set up to track remote branch dev from origin.
+// Pull failed, becuase local dev is not linked with remote dev    
+// So, as hinted, link is needed    
+> $ git branch --set-upstream dev origin/dev  
+> Branch dev set up to track remote branch dev from origin.  
 
-// Then try pull again  
-> $ git pull
-> Auto-merging hello.py
-> CONFLICT (content): Merge conflict in hello.py
-> Automatic merge failed; fix conflicts and then commit the result.
+// Then try pull again   
+> $ git pull  
+> Auto-merging hello.py  
+> CONFLICT (content): Merge conflict in hello.py  
+> Automatic merge failed; fix conflicts and then commit the result.  
 
-// Then resolve conflicts manually  
-// Then commit and push  
-> $ git commit -m "merge & fix hello.py"
-> $ git push origin dev
+// Then resolve conflicts manually    
+// Then commit and push   
+> $ git commit -m "merge & fix hello.py"  
+> $ git push origin dev  
 
 
 
