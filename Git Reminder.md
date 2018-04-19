@@ -35,14 +35,14 @@ $ git log --pretty=oneline
 ea34578d5496d7dd233c827ed32a8cd576c5ee85 add distributed  
 cb926e7ea50ad11b8f9e909c05226233bf755030 wrote a readme file  
 
-//To go back to a previous commit by *index*  
+//To go back to a previous commit by **index**  
 $ git reset --hard HEAD^    //HEAD^ is -1; HEAD^^ is -2; HEAD~n is -n  
 
-//To go back to a previous commit by *commit id*  
+//To go back to a previous commit by **commit id**  
 $ git reset --hard 3628164  
 HEAD is now at 3628164 append GPL  
 
-//To go back to *future*, find future commit id by checking operation logs  
+//To go back to **future**, find future commit id by checking operation logs  
 $ git reflog  
 ea34578 HEAD@{0}: reset: moving to HEAD^  
 3628164 HEAD@{1}: commit: append GPL  
@@ -50,8 +50,8 @@ ea34578 HEAD@{2}: commit: add distributed
 cb926e7 HEAD@{3}: commit (initial): wrote a readme file  
 
 # 3. Work Directory and Stage  
-//git add : from *Work Directory* to *Stage*  
-//git commit : from *Stage* to *Current Branch*  
+//git add : from **Work Directory** to **Stage**  
+//git commit : from **Stage** to **Current Branch**  
 
 //git diff --staged will only show changes to files in the "staged" area  
 //git diff HEAD will show all changes to tracked files. If you have all changes staged for commit, then both commands will output the same.  
