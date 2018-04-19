@@ -322,6 +322,7 @@ $ git branch -D branchname
 // **push to certain branch**  
 // push to master  
 > $ git push origin master  
+
 // push to dev  
 > $ git push origin dev  
 
