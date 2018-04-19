@@ -319,7 +319,7 @@ $ git branch -D branchname
 > origin  git@github.com:michaelliao/learngit.git (fetch)  
 > origin  git@github.com:michaelliao/learngit.git (push)  
 
-// **push to certain branch**  
+// **push branch to remote**  
 // push to master  
 > $ git push origin master  
 
@@ -334,7 +334,7 @@ $ git branch -D branchname
 
 // feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。  
 
-// **fetch branch**  
+// **fetch branch from remote**  
 // **A do**
 > $ git clone git@github.com:michaelliao/learngit.git  
 > Cloning into 'learngit'...  
@@ -402,12 +402,94 @@ $ git branch -D branchname
 > $ git push origin dev  
 
 
+# 8. Tag Management
 
+## create tag
 
+// Switch to required branch  
+> $ git branch  
+> * dev  
+>   master  
+> $ git checkout master  
+> Switched to branch 'master'  
 
+//Then  
+> $ git tag v1.0  
 
+//Check tag  
+> $ git tag  
+> v1.0  
+
+//create tag on a history commit  
+> $ git log --pretty=oneline --abbrev-commit  
+> 6a5819e merged bug fix 101  
+> cc17032 fix bug 101  
+> 7825a50 merge with no-ff  
+> **6224937** add merge  
+> 59bc1cb conflict fixed  
+> 400b400 & simple  
+> 75a857c AND simple  
+> fec145a branch test  
+> d17efd8 remove test.txt  
+> ...  
+
+> $ git tag v0.9 **6224937**  
+
+// show tag in alphabetical order  
+> $ git tag  
+> v0.9  
+> v1.0  
+
+// show tag details  
+> $ git show v0.9  
+> commit 622493706ab447b6bb37e4e2a2f276a20fed2ab4  
+> Author: Michael Liao <askxuefeng@gmail.com>  
+> Date:   Thu Aug 22 11:22:08 2013 +0800  
+
+>     add merge  
+> ...  
+   
   
-  
+// create tag with message  
+> $ git tag -a v0.1 -m "version 0.1 released" 3628164
+
+## operate tag
+
+> $ git tag -d v0.1  
+> Deleted tag 'v0.1' (was e078af9)  
+
+//push a tag  
+> $ git push origin v1.0  
+> Total 0 (delta 0), reused 0 (delta 0)  
+> To git@github.com:michaelliao/learngit.git  
+>  * [new tag]         v1.0 -> v1.0  
+
+//push all tags  
+> $ git push origin --tags  
+> Counting objects: 1, done.  
+> Writing objects: 100% (1/1), 554 bytes, done.  
+> Total 1 (delta 0), reused 0 (delta 0)  
+> To git@github.com:michaelliao/learngit.git  
+>  * [new tag]         v0.2 -> v0.2  
+>  * [new tag]         v0.9 -> v0.9  
+
+//remove tags pushed, first remove local, then remove remote  
+> $ git tag -d v0.9  
+> Deleted tag 'v0.9' (was 6224937)  
+
+> $ git push origin :refs/tags/v0.9  
+> To git@github.com:michaelliao/learngit.git  
+>  - [deleted]         v0.9  
+
+# Fork public projects
+// 1. fork on github from public project to own github,   
+// 2. clone from own remote repository to local,   
+// 3. revise and push to own remote repository,   
+// 4. pull a request to original public one.    
+
+
+
+
 
 
 
