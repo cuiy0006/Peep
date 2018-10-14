@@ -1,6 +1,7 @@
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ----- install homebrew
 
 brew tap homebrew/services
+Then install pgAdmin4
 
 brew install postgres
 brew stop postgres
