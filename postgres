@@ -1,0 +1,9 @@
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ----- install homebrew
+
+brew tap homebrew/services
+
+brew install postgres
+brew stop postgres
+
+createdb
+psql -h localhost -------- this go to bash xxxxx=#, xxxxx is the user name, password is blank
