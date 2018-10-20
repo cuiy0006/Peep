@@ -4,7 +4,7 @@ brew tap homebrew/services
 Then install pgAdmin4
 
 brew install postgres
-brew stop postgres
+brew services stop postgres
 
 createdb
 psql -h localhost -------- this go to bash xxxxx=#, xxxxx is the user name, password is blank
